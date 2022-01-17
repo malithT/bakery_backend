@@ -3,6 +3,7 @@ package com.bakery.bakeryProducts.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -14,4 +15,8 @@ public class ProductCategory {
     @Column(name = "product_category_id")
     int productCategoryId;
     String categoryName;
+    @Temporal(TemporalType.DATE)
+    Date createdDate;
+    String createdBy;
+
 }

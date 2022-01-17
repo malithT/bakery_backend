@@ -1,11 +1,13 @@
 package com.bakery.bakeryProducts.controller;
 
+import com.bakery.bakeryProducts.entity.Product;
 import com.bakery.bakeryProducts.entity.ProductCategory;
 import com.bakery.bakeryProducts.service.ProductCategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/productCategoryDetails")
@@ -15,7 +17,7 @@ public class ProductCategoryController {
     ProductCategoryService productCategoryService;
 
     @PostMapping("/saveProductCategory")
-    public String saveProductCategory(@ModelAttribute ProductCategory productCategory){
+    public String saveProductCategory(@RequestBody ProductCategory productCategory){
 
         return  productCategoryService.saveProductCategory(productCategory);
     }
@@ -27,7 +29,7 @@ public class ProductCategoryController {
     }
 
     @PostMapping("/editProductCategory")
-    public String editProductCategory(@ModelAttribute ProductCategory productCategory){
+    public String editProductCategory(@RequestBody ProductCategory productCategory){
 
         return  productCategoryService.editProductCategory(productCategory.getProductCategoryId(), productCategory.getCategoryName());
     }
@@ -36,5 +38,11 @@ public class ProductCategoryController {
     public String deleteProductCategory(@RequestParam ("productCategoryId") int productCategoryId){
 
         return  productCategoryService.deleteProductCategory(productCategoryId);
+    }
+
+    @PostMapping("/searchByProductCategoryId")
+    public Optional<ProductCategory> searchUserByProductCategoryId(@RequestParam("productCategoryId") int productCategoryId){
+
+        return  productCategoryService.searchUserByProductCategoryId(productCategoryId);
     }
 }

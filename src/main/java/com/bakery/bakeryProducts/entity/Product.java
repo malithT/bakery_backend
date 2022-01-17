@@ -14,9 +14,11 @@ public class Product {
     @Column(name = "product_id")
     int productId;
     String productName;
+    @Temporal(TemporalType.DATE)
     Date addedDate;
     Double productPrice;
     @ManyToOne
     @JoinColumn(name = "product_category_id", referencedColumnName = "product_category_id")
     private ProductCategory productCategory;
+    String createdBy;
 }

@@ -17,5 +17,6 @@ public class UserRole {
     int roleId;
     String roleName;
     String createdBy;
+    @Temporal(TemporalType.DATE)
     Date createdDate;
 }

@@ -14,19 +14,26 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductCategoryRepository productCategoryRepository;
 
 
     @Override
     public String saveProduct(Product product) {
-        productRepository.save(product);
         JSONObject alert = new JSONObject();
-        alert.put("message","Product Added Successfully");
+        try {
+            product.setProductCategory(productCategoryRepository.getById(product.getProductCategory().getProductCategoryId()));
+            productRepository.save(product);
+            alert.put("message", "Product Added Successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return alert.toString();
     }
 
@@ -52,5 +59,10 @@ public class ProductServiceImpl implements ProductService {
         JSONObject alert = new JSONObject();
         alert.put("message","Product Deleted Successfully");
         return alert.toString();
+    }
+
+    @Override
+    public Optional<Product> searchUserByProductId(int productId) {
+        return productRepository.findById(productId);
     }
 }

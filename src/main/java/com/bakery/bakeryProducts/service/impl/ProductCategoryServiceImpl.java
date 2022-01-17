@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +51,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         JSONObject alert = new JSONObject();
         alert.put("message","Product Category Deleted Successfully");
         return alert.toString();
+    }
+
+    @Override
+    public Optional<ProductCategory> searchUserByProductCategoryId(int productCategoryId) {
+        return productCategoryRepository.findById(productCategoryId);
     }
 }

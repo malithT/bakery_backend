@@ -8,4 +8,5 @@ public interface OrderDetailService {
     String saveOrder(OrderDetail orderDetail);
     List<OrderDetail> getAllOrders();
     String editOrder(OrderDetail orderDetail);
+    List<OrderDetail> getDetailByOrderHeader(int orderHeaderId);
 }

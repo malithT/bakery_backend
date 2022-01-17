@@ -26,8 +26,14 @@ public class OrderDetailController {
     }
 
     @PostMapping("/editOrder")
-    public String editProducts(@ModelAttribute OrderDetail orderDetail){
+    public String editProducts(@RequestBody OrderDetail orderDetail){
 
         return  orderDetailService.editOrder(orderDetail);
+    }
+
+    @PostMapping("/getDetailByOrderHeader")
+    public List<OrderDetail> getDetailByOrderHeader(@RequestParam ("orderHeaderId") int orderHeaderId){
+
+        return  orderDetailService.getDetailByOrderHeader(orderHeaderId);
     }
 }

@@ -1,7 +1,9 @@
 package com.bakery.bakeryProducts.service.impl;
 
 import com.bakery.bakeryProducts.entity.OrderDetail;
+import com.bakery.bakeryProducts.entity.OrderHeader;
 import com.bakery.bakeryProducts.repository.OrderDetailRepository;
+import com.bakery.bakeryProducts.repository.OrderHeaderRepository;
 import com.bakery.bakeryProducts.service.OrderDetailService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
@@ -14,6 +16,7 @@ import java.util.List;
 public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
+    private final OrderHeaderRepository orderHeaderRepository;
 
     @Override
     public String saveOrder(OrderDetail orderDetail) {
@@ -34,5 +37,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         orderDetailRepository.editOrder(orderDetail.getOrderDetailId(),orderDetail.getProductCategory(),
                                     orderDetail.getProduct(), orderDetail.getQuantity());
         return alert.toString();
+    }
+
+    @Override
+    public List<OrderDetail> getDetailByOrderHeader(int orderHeaderId) {
+        OrderHeader orderHeader = orderHeaderRepository.getById(orderHeaderId);
+        return orderDetailRepository.findOrderDetailByOrderHeader(orderHeader);
     }
 }

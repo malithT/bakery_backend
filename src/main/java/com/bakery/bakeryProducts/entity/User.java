@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -21,5 +22,6 @@ public class User {
     private UserRole userRole;
     boolean status;
     String createdBy;
-    String createdDate;
+    @Temporal(TemporalType.DATE)
+    Date createdDate;
 }
