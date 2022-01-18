@@ -24,4 +24,5 @@ public class OrderHeader {
     @Temporal(TemporalType.DATE)
     Date addedDate;
     String createdBy;
+    Double totAmount;
 }

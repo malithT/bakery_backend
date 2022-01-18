@@ -1,5 +1,6 @@
 package com.bakery.bakeryProducts.controller;
 
+import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.Product;
 import com.bakery.bakeryProducts.entity.ProductCategory;
 import com.bakery.bakeryProducts.entity.User;
@@ -45,4 +46,10 @@ public class ProductController {
 
         return  productService.searchUserByProductId(productId);
     }
+
+    @PostMapping("/getSelectedProducts")
+    public List<Product> getSelectedProducts(@RequestParam ("productCategoryId") int productCategoryId){
+        return  productService.getSelectedProducts(productCategoryId);
+    }
+
 }

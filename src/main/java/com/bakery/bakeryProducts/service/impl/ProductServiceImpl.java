@@ -1,6 +1,8 @@
 package com.bakery.bakeryProducts.service.impl;
 
+import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.Product;
+import com.bakery.bakeryProducts.entity.ProductCategory;
 import com.bakery.bakeryProducts.repository.ProductCategoryRepository;
 import com.bakery.bakeryProducts.repository.ProductRepository;
 import com.bakery.bakeryProducts.service.ProductCategoryService;
@@ -64,5 +66,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> searchUserByProductId(int productId) {
         return productRepository.findById(productId);
+    }
+
+    @Override
+    public List<Product> getSelectedProducts(int productCategoryId) {
+        ProductCategory productCategory = productCategoryRepository.getById(productCategoryId);
+        return productRepository.findProductByProductCategory(productCategory);
     }
 }

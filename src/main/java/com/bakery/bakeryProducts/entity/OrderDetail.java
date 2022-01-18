@@ -25,6 +25,7 @@ public class OrderDetail {
     @JoinColumn(name = "order_header_id", referencedColumnName = "order_header_id")
     private OrderHeader orderHeader;
     Integer quantity;
+    Double amount;
 
 
 

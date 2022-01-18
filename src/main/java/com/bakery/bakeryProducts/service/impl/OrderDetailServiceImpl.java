@@ -2,8 +2,12 @@ package com.bakery.bakeryProducts.service.impl;
 
 import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.OrderHeader;
+import com.bakery.bakeryProducts.entity.Product;
+import com.bakery.bakeryProducts.entity.ProductCategory;
 import com.bakery.bakeryProducts.repository.OrderDetailRepository;
 import com.bakery.bakeryProducts.repository.OrderHeaderRepository;
+import com.bakery.bakeryProducts.repository.ProductCategoryRepository;
+import com.bakery.bakeryProducts.repository.ProductRepository;
 import com.bakery.bakeryProducts.service.OrderDetailService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
@@ -35,7 +39,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public String editOrder(OrderDetail orderDetail) {
         JSONObject alert = new JSONObject();
         orderDetailRepository.editOrder(orderDetail.getOrderDetailId(),orderDetail.getProductCategory(),
-                                    orderDetail.getProduct(), orderDetail.getQuantity());
+                                    orderDetail.getProduct(), orderDetail.getQuantity(), orderDetail.getAmount());
+        Double totAmount = orderDetailRepository.updateTotAmount(orderDetail.getOrderHeader().getOrderHeaderId());
+        orderHeaderRepository.updateHeader(totAmount,orderDetail.getOrderHeader().getOrderHeaderId());
+        System.out.println(totAmount);
+        alert.put("message","Order Updated Successfully");
         return alert.toString();
     }
 
@@ -44,4 +52,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         OrderHeader orderHeader = orderHeaderRepository.getById(orderHeaderId);
         return orderDetailRepository.findOrderDetailByOrderHeader(orderHeader);
     }
+
+    @Override
+    public OrderDetail getDetailByOrderDetailId(int orderDetailId) {
+        return orderDetailRepository.findOrderDetailByOrderDetailId(orderDetailId);
+    }
+
 }

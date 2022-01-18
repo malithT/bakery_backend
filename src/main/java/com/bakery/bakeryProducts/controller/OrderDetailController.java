@@ -36,4 +36,14 @@ public class OrderDetailController {
 
         return  orderDetailService.getDetailByOrderHeader(orderHeaderId);
     }
+
+
+    @PostMapping("/getDetailsById")
+    public OrderDetail getDetailsById(@RequestParam ("orderDetailId") int orderDetailId){
+
+        return  orderDetailService.getDetailByOrderDetailId(orderDetailId);
+    }
+
+
+
 }

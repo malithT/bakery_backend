@@ -21,4 +21,12 @@ public interface OrderHeaderRepository extends JpaRepository<OrderHeader, Intege
             "order_status=:orderStatus WHERE order_header_id=:orderId")
     int editHeaderOrder(int orderId , String customerMobile, String customerName, Date deliveryDate, String orderStatus);
 
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true,value = "UPDATE order_header_details " +
+            "SET tot_amount=:totAmount " +
+            "WHERE order_header_id=:orderHeaderId")
+    int updateHeader(Double totAmount,int orderHeaderId);
+
+
 }

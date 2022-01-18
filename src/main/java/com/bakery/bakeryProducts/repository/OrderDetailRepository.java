@@ -17,12 +17,18 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
 
     @Modifying
     @Transactional
-    @Query(nativeQuery = true, value ="UPDATE `order_detail` " +
+    @Query(nativeQuery = true, value ="UPDATE `order_details` " +
             "SET product_category_id=:productCategory," +
             "product_id = :product," +
             "quantity = :quantity," +
-            " where order_id=:orderDetailId")
-    int editOrder(int orderDetailId, ProductCategory productCategory, Product product,Integer quantity);
+            "amount =:amount " +
+            "where order_detail_id=:orderDetailId")
+    int editOrder(int orderDetailId, ProductCategory productCategory, Product product,Integer quantity,Double amount);
 
     List<OrderDetail> findOrderDetailByOrderHeader(OrderHeader orderHeader);
+    OrderDetail findOrderDetailByOrderDetailId(int orderDetailId);
+
+    @Query(nativeQuery = true,value = "select SUM(amount) as totAmount from order_details where order_header_id =:orderHeaderId")
+    Double updateTotAmount(int orderHeaderId);
+
 }

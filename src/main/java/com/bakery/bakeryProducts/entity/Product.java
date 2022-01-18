@@ -1,5 +1,6 @@
 package com.bakery.bakeryProducts.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.util.Date;
 
 @Entity
 @Data
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Product {
 
     @Id
