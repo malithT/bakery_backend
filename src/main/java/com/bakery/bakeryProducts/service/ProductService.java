@@ -15,4 +15,5 @@ public interface ProductService {
     String deleteProduct(int productId);
     Optional<Product> searchUserByProductId(int productId);
     List<Product> getSelectedProducts(int productCategoryId);
+    Product getProductPrice(int productId);
 }

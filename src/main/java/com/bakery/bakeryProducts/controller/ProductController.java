@@ -52,4 +52,9 @@ public class ProductController {
         return  productService.getSelectedProducts(productCategoryId);
     }
 
+    @PostMapping("/getProductPrice")
+    public Product getProductPrice(@RequestParam ("productId") int productId){
+        return  productService.getProductPrice(productId);
+    }
+
 }

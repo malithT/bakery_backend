@@ -20,4 +20,5 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     int editProduct(int productId, String productName ,Double productPrice,int productCategoryId);
 
     List<Product> findProductByProductCategory(ProductCategory productCategory);
+    Product findProductByProductId(int productId);
 }
