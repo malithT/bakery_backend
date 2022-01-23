@@ -18,8 +18,10 @@ public interface OrderHeaderRepository extends JpaRepository<OrderHeader, Intege
             "SET customer_mobile=:customerMobile," +
             "customer_name=:customerName," +
             "delivery_date=:deliveryDate," +
-            "order_status=:orderStatus WHERE order_header_id=:orderId")
-    int editHeaderOrder(int orderId , String customerMobile, String customerName, Date deliveryDate, String orderStatus);
+            "order_status=:orderStatus," +
+            "year=:year," +
+            "month=:month WHERE order_header_id=:orderId")
+    int editHeaderOrder(int orderId , String customerMobile, String customerName, Date deliveryDate, String orderStatus,String year,String month);
 
     @Modifying
     @Transactional
@@ -28,5 +30,6 @@ public interface OrderHeaderRepository extends JpaRepository<OrderHeader, Intege
             "WHERE order_header_id=:orderHeaderId")
     int updateHeader(Double totAmount,int orderHeaderId);
 
+    OrderHeader findFirstByOrderByOrderHeaderIdDesc();
 
 }

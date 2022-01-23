@@ -1,5 +1,6 @@
 package com.bakery.bakeryProducts.controller;
 
+import com.bakery.bakeryProducts.dto.CustomOrderDetails;
 import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.service.OrderDetailService;
 import lombok.AllArgsConstructor;
@@ -15,8 +16,8 @@ public class OrderDetailController {
     OrderDetailService orderDetailService;
 
     @PostMapping("/saveOrder")
-    public String saveOrder(@ModelAttribute OrderDetail orderDetail){
-        return  orderDetailService.saveOrder(orderDetail);
+    public String saveOrder(@RequestBody CustomOrderDetails customOrderDetails){
+        return  orderDetailService.saveOrder(customOrderDetails);
     }
 
     @GetMapping("/getAllOrders")

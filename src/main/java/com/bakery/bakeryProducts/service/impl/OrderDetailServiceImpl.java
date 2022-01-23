@@ -1,5 +1,7 @@
 package com.bakery.bakeryProducts.service.impl;
 
+import com.bakery.bakeryProducts.dto.CustomOrderDetails;
+import com.bakery.bakeryProducts.dto.CustomOrderResponse;
 import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.OrderHeader;
 import com.bakery.bakeryProducts.entity.Product;
@@ -13,6 +15,11 @@ import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import java.time.Month;
+import java.time.Year;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -21,11 +28,35 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
     private final OrderHeaderRepository orderHeaderRepository;
+    private final ProductRepository productRepository;
+    private final ProductCategoryRepository productCategoryRepository;
 
     @Override
-    public String saveOrder(OrderDetail orderDetail) {
+    public String saveOrder(CustomOrderDetails customOrderDetails) {
         JSONObject alert = new JSONObject();
-        orderDetailRepository.save(orderDetail);
+        Double totAmount = 0.0;
+        String month;
+        if(customOrderDetails.getOrderHeader().getMonth().length() == 1){
+           month = "0" + customOrderDetails.getOrderHeader().getMonth();
+        }else{
+            month = customOrderDetails.getOrderHeader().getMonth();
+        }
+        System.out.println(month);
+        customOrderDetails.getOrderHeader().setMonth(month);
+        orderHeaderRepository.save(customOrderDetails.getOrderHeader());
+        for (CustomOrderResponse orderDetails : customOrderDetails.getOrderDetail()) {
+
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setProduct(productRepository.getById(orderDetails.getProductId()));
+            orderDetail.setProductCategory(productCategoryRepository.getById(orderDetails.getProductCategoryId()));
+            orderDetail.setOrderHeader(orderHeaderRepository.findFirstByOrderByOrderHeaderIdDesc());
+            orderDetail.setAmount(orderDetails.getAmount());
+            orderDetail.setQuantity(orderDetails.getQuantity());
+            orderDetailRepository.save(orderDetail);
+            totAmount = orderDetail.getAmount() + totAmount;
+        }
+        OrderHeader orderHeader = orderHeaderRepository.findFirstByOrderByOrderHeaderIdDesc();
+        orderHeaderRepository.updateHeader(totAmount,orderHeader.getOrderHeaderId());
         alert.put("message","Order Created Successfully");
         return alert.toString();
     }

@@ -25,4 +25,6 @@ public class OrderHeader {
     Date addedDate;
     String createdBy;
     Double totAmount;
+    String year;
+    String month;
 }

@@ -30,9 +30,15 @@ public class OrderHeaderServiceImpl implements OrderHeaderService {
     @Override
     public String editHeaderOrder(OrderHeader orderHeader) {
         JSONObject alert = new JSONObject();
+        String month;
+        if(orderHeader.getMonth().length() == 1){
+            month = "0" + orderHeader.getMonth();
+        }else{
+            month = orderHeader.getMonth();
+        }
         orderHeaderRepository.editHeaderOrder(orderHeader.getOrderHeaderId(), orderHeader.getCustomerMobile(),
                                                 orderHeader.getCustomerName(), orderHeader.getDeliveryDate(),
-                                                orderHeader.getOrderStatus());
+                                                orderHeader.getOrderStatus(),orderHeader.getYear(),month);
         alert.put("message","Order Updated Successfully");
         return alert.toString() ;
     }

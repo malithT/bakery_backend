@@ -21,6 +21,7 @@ import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+import static sun.security.timestamp.TSResponse.BAD_REQUEST;
 
 public class AuthorizationFilter extends OncePerRequestFilter {
 
@@ -28,8 +29,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getServletPath().equals("/login")){
             filterChain.doFilter(request,response);
-            System.out.println(request.getParameter("username"));
-            System.out.println(request.getParameter("password"));
         }else{
 
             String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -54,11 +53,11 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
 
                 }catch (Exception e){
-
                     response.setHeader("error",e.getMessage());
                     Map<String,String> error = new HashMap<>();
                     error.put("error",e.getMessage());
                     response.setContentType(APPLICATION_JSON_VALUE);
+                    response.setStatus(400);
                     new ObjectMapper().writeValue(response.getOutputStream(),error);
                 }
             }else{
