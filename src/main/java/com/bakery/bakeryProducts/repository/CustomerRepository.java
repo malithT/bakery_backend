@@ -12,8 +12,5 @@ import java.util.Map;
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerDetails,Integer> {
 
-    @Query(nativeQuery = true,value = "select customer_name as customerName from customer_details")
-    List<Map<String, String>> getAllCustomer();
-
     CustomerDetails findCustomerDetailsByCustomerName(String customerName);
 }

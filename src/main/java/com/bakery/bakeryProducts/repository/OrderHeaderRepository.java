@@ -34,5 +34,9 @@ public interface OrderHeaderRepository extends JpaRepository<OrderHeader, Intege
 
     OrderHeader findFirstByOrderByOrderHeaderIdDesc();
 
+    @Query(nativeQuery = true,value = "SELECT * from order_header_details WHERE delivery_date >= :deliveryDate " +
+            "AND order_status !='CANCELLED'")
+    List<OrderHeader> getUpcomingOrders(Date deliveryDate);
+
 
 }

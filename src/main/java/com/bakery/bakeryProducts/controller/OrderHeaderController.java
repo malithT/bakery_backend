@@ -6,6 +6,7 @@ import com.bakery.bakeryProducts.service.OrderHeaderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,6 +35,12 @@ public class OrderHeaderController {
     public Optional<OrderHeader> findOrderById(@RequestParam ("orderId") int orderId){
 
         return  orderHeaderService.findOrderById(orderId);
+    }
+
+    @PostMapping("/getUpcomingOrders")
+    public List<OrderHeader> getUpcomingOrders(@RequestParam ("deliveryDate") String deliveryDate){
+
+        return  orderHeaderService.getUpcomingOrders(deliveryDate);
     }
 
 }

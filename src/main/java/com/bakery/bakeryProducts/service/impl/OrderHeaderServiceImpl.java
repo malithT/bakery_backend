@@ -6,8 +6,13 @@ import com.bakery.bakeryProducts.repository.OrderHeaderRepository;
 import com.bakery.bakeryProducts.service.OrderHeaderService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +53,19 @@ public class OrderHeaderServiceImpl implements OrderHeaderService {
     @Override
     public Optional<OrderHeader> findOrderById(int orderId) {
         return orderHeaderRepository.findById(orderId);
+    }
+
+    @Override
+    public List<OrderHeader> getUpcomingOrders(String deliveryDate) {
+        Date date = null;
+        
+        try {
+           date = new SimpleDateFormat("yyyy-MM-dd").parse(deliveryDate);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        
+        return orderHeaderRepository.getUpcomingOrders(date);
     }
 
 }

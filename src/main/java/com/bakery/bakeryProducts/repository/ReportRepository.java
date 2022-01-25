@@ -25,7 +25,7 @@ public interface ReportRepository extends JpaRepository<OrderHeader,Integer> {
     List<Object[]> monthlyCancelledSummary(String year);
 
 
-    @Query(nativeQuery = true,value = "SELECT count(product_name) as orderCount,product_name FROM order_header_details\n" +
+    @Query(nativeQuery = true,value = "SELECT count(product_name) as orderCount,product_name as productName FROM order_header_details\n" +
             "INNER JOIN order_details on order_details.order_header_id = order_header_details.order_header_id\n" +
             "INNER JOIN product on order_details.product_id = product.product_id\n" +
             "GROUP BY product_name\n" +
