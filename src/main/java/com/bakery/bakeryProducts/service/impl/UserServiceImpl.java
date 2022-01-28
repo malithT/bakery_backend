@@ -1,5 +1,7 @@
 package com.bakery.bakeryProducts.service.impl;
 
+
+import com.auth0.jwt.JWT;
 import com.bakery.bakeryProducts.entity.User;
 import com.bakery.bakeryProducts.entity.UserRole;
 import com.bakery.bakeryProducts.repository.UserRepository;
@@ -10,15 +12,31 @@ import com.sun.net.httpserver.Authenticator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessEventPublishingLogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.FilterChain;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.*;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Service
 @RequiredArgsConstructor
@@ -89,6 +107,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             e.printStackTrace();
         }
         return userRepository.findById(userId);
+    }
+
+    @Override
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject alert = new JSONObject();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+            auth.setAuthenticated(false);
+            alert.put("message","User logged out successfully");
+        }
+        return alert.toString();
     }
 
 

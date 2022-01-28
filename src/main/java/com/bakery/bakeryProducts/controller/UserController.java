@@ -5,6 +5,8 @@ import com.bakery.bakeryProducts.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,6 +47,12 @@ public class UserController {
     public Optional<User> searchUserById(@RequestParam("userId") int userId){
 
         return  userService.searchUserById(userId);
+    }
+
+    @PostMapping(value="/logout")
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+
+        return userService.logout(request, response);
     }
 
 }
