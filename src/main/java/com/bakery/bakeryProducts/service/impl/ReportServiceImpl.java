@@ -1,23 +1,36 @@
 package com.bakery.bakeryProducts.service.impl;
 
-import com.bakery.bakeryProducts.dto.CancellationSummery;
-import com.bakery.bakeryProducts.dto.CompletedOrder;
-import com.bakery.bakeryProducts.dto.MonthlySummeryDto;
+import com.bakery.bakeryProducts.dto.*;
+import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.OrderHeader;
+import com.bakery.bakeryProducts.repository.OrderHeaderRepository;
+import com.bakery.bakeryProducts.repository.ProductCategoryRepository;
+import com.bakery.bakeryProducts.repository.ProductRepository;
 import com.bakery.bakeryProducts.repository.ReportRepository;
 import com.bakery.bakeryProducts.service.ReportService;
 import lombok.AllArgsConstructor;
 import net.minidev.json.JSONObject;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
+import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingLong;
 
 @Service
 @AllArgsConstructor
 public class ReportServiceImpl implements ReportService {
 
     public final ReportRepository reportRepository;
+    public final OrderHeaderRepository orderHeaderRepository;
+    public final ProductCategoryRepository productCategoryRepository;
+    public final ProductRepository productRepository;
+
 
     @Override
     public List<Double> monthlySummary(String currentYear) {
@@ -109,6 +122,60 @@ public class ReportServiceImpl implements ReportService {
 
 
         return monthlyCompletedOrders;
+    }
+
+    @Override
+    public SearchDataResponse searchData(SearchData searchData) {
+        ProductCategoryCount productCategoryCount1 = new ProductCategoryCount();
+        List<OrderDetail> searchDataList = new ArrayList<>();
+        SearchDataResponse searchDataResponse = new SearchDataResponse();
+        StatusCount statusCount = new StatusCount();
+        Map<String,Long> productCount = new HashMap<>();
+        try {
+            List<Object[]> searchResult= reportRepository.searchData(searchData.getDateTo(), searchData.getDateFrom(),
+                    searchData.getProductCategoryId(),searchData.getProductId(),searchData.getCustomerName());
+
+            List<String> orderStatus = new ArrayList<>();
+            searchResult.forEach(sr -> {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setOrderHeader(orderHeaderRepository.getById(Integer.parseInt(sr[0].toString())));
+                orderDetail.setProductCategory(productCategoryRepository.getById(Integer.parseInt(sr[1].toString())));
+                orderDetail.setProduct(productRepository.getById(Integer.parseInt(sr[2].toString())));
+                orderDetail.setOrderDetailId(Integer.parseInt(sr[3].toString()));
+                orderDetail.setQuantity(Integer.parseInt(sr[4].toString()));
+                orderDetail.setAmount((Double) (sr[5]));
+                searchDataList.add(orderDetail);
+                orderStatus.add(orderDetail.getOrderHeader().getOrderStatus());
+            });
+
+            Map<String, Long> result = orderStatus.stream()
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+
+            statusCount.setStatusName(result.keySet());
+            statusCount.setStatusCount(result.values());
+
+            List<Object[]> productCategoryCount = reportRepository.getProductCount(searchData.getDateTo(), searchData.getDateFrom(),
+                    searchData.getProductCategoryId(),searchData.getProductId(),searchData.getCustomerName());
+
+            productCategoryCount.forEach(pc ->{
+                productCount.put(pc[0].toString(), Long.valueOf(pc[1].toString()));
+            });
+
+            productCategoryCount1.setProductCategory(productCount.keySet());
+            productCategoryCount1.setProductCount(productCount.values());
+
+            System.out.println(result);
+
+        }catch (Exception e){
+        e.printStackTrace();
+        }
+
+        searchDataResponse.setSearchData(searchDataList);
+        searchDataResponse.setStatusCount(statusCount);
+        searchDataResponse.setProductCategoryCount(productCategoryCount1);
+
+        return searchDataResponse;
     }
 
 }

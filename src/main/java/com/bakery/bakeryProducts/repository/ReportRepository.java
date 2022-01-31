@@ -1,6 +1,8 @@
 package com.bakery.bakeryProducts.repository;
 
 import com.bakery.bakeryProducts.dto.MonthlySummeryDto;
+import com.bakery.bakeryProducts.dto.SearchData;
+import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.OrderHeader;
 import net.minidev.json.JSONObject;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -41,4 +43,32 @@ public interface ReportRepository extends JpaRepository<OrderHeader,Integer> {
             "AND `year` =:year\n" +
             "GROUP BY `month`")
     List<Object[]> completedOrders(String year);
+
+    @Query(nativeQuery = true,value = "select order_details.order_header_id,order_details.product_category_id,order_details.product_id,\n" +
+            "order_details.order_detail_id,order_details.quantity,order_details.amount from order_header_details\n" +
+            "INNER JOIN order_details on order_header_details.order_header_id = order_details.order_header_id\n" +
+            "INNER JOIN product on product.product_id = order_details.product_id\n" +
+            "INNER JOIN product_category on product.product_category_id = product_category.product_category_id\n" +
+            "WHERE \n" +
+            "delivery_date BETWEEN :dateFrom AND :dateTo \n" +
+            "AND if(:productCategoryId is null,true,order_details.product_category_id = :productCategoryId)\n" +
+            "AND if(:productId is null,true,order_details.product_id = :productId)" +
+            "AND if(:customerName is null,true,customer_name = :customerName)")
+    List<Object[]> searchData(Date dateTo, Date dateFrom,Integer productCategoryId,Integer productId,String customerName);
+
+
+    @Query(nativeQuery = true,value = "select product_name as productName,count(product_name) as productCount from order_header_details\n" +
+            "INNER JOIN order_details on order_header_details.order_header_id = order_details.order_header_id\n" +
+            "INNER JOIN product on product.product_id = order_details.product_id\n" +
+            "INNER JOIN product_category on product.product_category_id = product_category.product_category_id\n" +
+            "WHERE \n" +
+            "delivery_date BETWEEN :dateFrom AND :dateTo \n" +
+            "AND if(:productCategoryId is null,true,order_details.product_category_id = :productCategoryId)\n" +
+            "AND if(:productId is null,true,order_details.product_id = :productId)" +
+            "AND if(:customerName is null,true,customer_name = :customerName) " +
+            "group by product_name " +
+            "ORDER BY count(product_name) DESC " +
+            "LIMIT 5")
+    List<Object[]> getProductCount(Date dateTo, Date dateFrom, Integer productCategoryId, Integer productId, String customerName);
+
 }

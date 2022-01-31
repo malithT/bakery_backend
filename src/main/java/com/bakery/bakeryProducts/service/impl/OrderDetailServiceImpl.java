@@ -41,7 +41,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }else{
             month = customOrderDetails.getOrderHeader().getMonth();
         }
-        System.out.println(month);
         customOrderDetails.getOrderHeader().setMonth(month);
         orderHeaderRepository.save(customOrderDetails.getOrderHeader());
         for (CustomOrderResponse orderDetails : customOrderDetails.getOrderDetail()) {
@@ -73,7 +72,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                                     orderDetail.getProduct(), orderDetail.getQuantity(), orderDetail.getAmount());
         Double totAmount = orderDetailRepository.updateTotAmount(orderDetail.getOrderHeader().getOrderHeaderId());
         orderHeaderRepository.updateHeader(totAmount,orderDetail.getOrderHeader().getOrderHeaderId());
-        System.out.println(totAmount);
         alert.put("message","Order Updated Successfully");
         return alert.toString();
     }
