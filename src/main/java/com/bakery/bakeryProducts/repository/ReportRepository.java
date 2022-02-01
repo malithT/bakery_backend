@@ -27,13 +27,14 @@ public interface ReportRepository extends JpaRepository<OrderHeader,Integer> {
     List<Object[]> monthlyCancelledSummary(String year);
 
 
-    @Query(nativeQuery = true,value = "SELECT count(product_name) as orderCount,product_name as productName FROM order_header_details\n" +
+    @Query(nativeQuery = true,value = "SELECT sum(quantity) as orderCount,product_name as productName FROM order_header_details\n" +
             "INNER JOIN order_details on order_details.order_header_id = order_header_details.order_header_id\n" +
             "INNER JOIN product on order_details.product_id = product.product_id\n" +
+            "where month= :month and year=:year " +
             "GROUP BY product_name\n" +
-            "ORDER BY count(product_name) DESC\n" +
+            "ORDER BY sum(quantity) DESC\n" +
             "LIMIT 3")
-    List<Map<String, String>> topSelling();
+    List<Map<String, String>> topSelling(String month,String year);
 
     @Query(nativeQuery = true,value = "SELECT *" +
             "FROM order_header_details WHERE delivery_date >= :deliveryDate AND order_status != 'CANCELLED'")
@@ -57,7 +58,7 @@ public interface ReportRepository extends JpaRepository<OrderHeader,Integer> {
     List<Object[]> searchData(Date dateTo, Date dateFrom,Integer productCategoryId,Integer productId,String customerName);
 
 
-    @Query(nativeQuery = true,value = "select product_name as productName,count(product_name) as productCount from order_header_details\n" +
+    @Query(nativeQuery = true,value = "select product_name as productName,sum(quantity) as productCount from order_header_details\n" +
             "INNER JOIN order_details on order_header_details.order_header_id = order_details.order_header_id\n" +
             "INNER JOIN product on product.product_id = order_details.product_id\n" +
             "INNER JOIN product_category on product.product_category_id = product_category.product_category_id\n" +

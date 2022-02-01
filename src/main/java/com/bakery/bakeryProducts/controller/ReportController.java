@@ -30,9 +30,10 @@ public class ReportController {
         return reportService.monthlyCancelSummary(currentYear);
     }
 
-    @GetMapping("/topSelling")
-    public List<Map<String, String>> topSelling(){
-        return  reportService.topSelling();
+    @PostMapping("/topSelling")
+    public List<Map<String, String>> topSelling(@RequestParam ("month") String month,
+                                                @RequestParam ("year") String year){
+        return  reportService.topSelling(month,year);
     }
 
     @PostMapping("/newOrder")

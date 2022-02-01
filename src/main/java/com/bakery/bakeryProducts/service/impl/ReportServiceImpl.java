@@ -84,8 +84,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Map<String, String>> topSelling() {
-        return reportRepository.topSelling();
+    public List<Map<String, String>> topSelling(String month,String year) {
+        return reportRepository.topSelling(month,year);
     }
 
     @Override
