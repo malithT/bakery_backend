@@ -1,10 +1,8 @@
 package com.bakery.bakeryProducts.service;
 
 import com.bakery.bakeryProducts.entity.ProductCategory;
-import com.bakery.bakeryProducts.entity.User;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface ProductCategoryService {

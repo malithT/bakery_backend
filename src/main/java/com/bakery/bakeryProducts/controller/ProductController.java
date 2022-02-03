@@ -1,9 +1,5 @@
 package com.bakery.bakeryProducts.controller;
-
-import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.Product;
-import com.bakery.bakeryProducts.entity.ProductCategory;
-import com.bakery.bakeryProducts.entity.User;
 import com.bakery.bakeryProducts.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

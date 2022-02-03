@@ -1,10 +1,5 @@
 package com.bakery.bakeryProducts.repository;
-
-import com.bakery.bakeryProducts.dto.MonthlySummeryDto;
-import com.bakery.bakeryProducts.dto.SearchData;
-import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.OrderHeader;
-import net.minidev.json.JSONObject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

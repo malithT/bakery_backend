@@ -1,5 +1,4 @@
 package com.bakery.bakeryProducts.service;
-import com.bakery.bakeryProducts.entity.User;
 import com.bakery.bakeryProducts.entity.UserRole;
 
 import java.util.List;

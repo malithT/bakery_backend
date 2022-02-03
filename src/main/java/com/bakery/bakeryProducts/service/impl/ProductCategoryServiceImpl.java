@@ -1,17 +1,12 @@
 package com.bakery.bakeryProducts.service.impl;
-
 import com.bakery.bakeryProducts.entity.ProductCategory;
-import com.bakery.bakeryProducts.entity.User;
 import com.bakery.bakeryProducts.repository.ProductCategoryRepository;
 import com.bakery.bakeryProducts.service.ProductCategoryService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
-import org.springframework.security.core.Transient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service

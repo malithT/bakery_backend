@@ -1,6 +1,4 @@
 package com.bakery.bakeryProducts.controller;
-
-import com.bakery.bakeryProducts.entity.Product;
 import com.bakery.bakeryProducts.entity.ProductCategory;
 import com.bakery.bakeryProducts.service.ProductCategoryService;
 import lombok.AllArgsConstructor;

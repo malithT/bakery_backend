@@ -2,8 +2,6 @@ package com.bakery.bakeryProducts.service;
 
 import com.bakery.bakeryProducts.dto.CustomOrderDetails;
 import com.bakery.bakeryProducts.entity.OrderDetail;
-import com.bakery.bakeryProducts.entity.ProductCategory;
-import org.hibernate.criterion.Order;
 
 import java.util.List;
 

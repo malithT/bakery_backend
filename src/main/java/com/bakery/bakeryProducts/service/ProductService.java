@@ -1,8 +1,5 @@
 package com.bakery.bakeryProducts.service;
-
-import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.Product;
-import com.bakery.bakeryProducts.entity.ProductCategory;
 
 import java.util.List;
 import java.util.Optional;

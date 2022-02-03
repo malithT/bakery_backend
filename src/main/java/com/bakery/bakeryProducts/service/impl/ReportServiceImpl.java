@@ -9,10 +9,7 @@ import com.bakery.bakeryProducts.repository.ProductRepository;
 import com.bakery.bakeryProducts.repository.ReportRepository;
 import com.bakery.bakeryProducts.service.ReportService;
 import lombok.AllArgsConstructor;
-import net.minidev.json.JSONObject;
-import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
-import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.*;
 import java.util.function.Function;
@@ -164,8 +161,6 @@ public class ReportServiceImpl implements ReportService {
 
             productCategoryCount1.setProductCategory(productCount.keySet());
             productCategoryCount1.setProductCount(productCount.values());
-
-            System.out.println(result);
 
         }catch (Exception e){
         e.printStackTrace();

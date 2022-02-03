@@ -1,18 +1,11 @@
 package com.bakery.bakeryProducts.service.impl;
-
-import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.Product;
 import com.bakery.bakeryProducts.entity.ProductCategory;
 import com.bakery.bakeryProducts.repository.ProductCategoryRepository;
 import com.bakery.bakeryProducts.repository.ProductRepository;
-import com.bakery.bakeryProducts.service.ProductCategoryService;
 import com.bakery.bakeryProducts.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Transient;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

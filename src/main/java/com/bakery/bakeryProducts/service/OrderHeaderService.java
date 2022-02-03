@@ -1,11 +1,8 @@
 package com.bakery.bakeryProducts.service;
 
-import com.bakery.bakeryProducts.entity.CustomerDetails;
 import com.bakery.bakeryProducts.entity.OrderHeader;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface OrderHeaderService {

@@ -4,8 +4,6 @@ import com.bakery.bakeryProducts.dto.CustomOrderDetails;
 import com.bakery.bakeryProducts.dto.CustomOrderResponse;
 import com.bakery.bakeryProducts.entity.OrderDetail;
 import com.bakery.bakeryProducts.entity.OrderHeader;
-import com.bakery.bakeryProducts.entity.Product;
-import com.bakery.bakeryProducts.entity.ProductCategory;
 import com.bakery.bakeryProducts.repository.OrderDetailRepository;
 import com.bakery.bakeryProducts.repository.OrderHeaderRepository;
 import com.bakery.bakeryProducts.repository.ProductCategoryRepository;
@@ -14,12 +12,6 @@ import com.bakery.bakeryProducts.service.OrderDetailService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
-
-import java.time.Month;
-import java.time.Year;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.List;
 
 @Service
