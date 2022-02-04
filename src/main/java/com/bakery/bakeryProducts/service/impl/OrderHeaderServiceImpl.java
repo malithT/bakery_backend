@@ -37,7 +37,7 @@ public class OrderHeaderServiceImpl implements OrderHeaderService {
         }
         orderHeaderRepository.editHeaderOrder(orderHeader.getOrderHeaderId(), orderHeader.getCustomerMobile(),
                                                 orderHeader.getCustomerName(), orderHeader.getDeliveryDate(),
-                                                orderHeader.getOrderStatus(),orderHeader.getYear(),month);
+                                                orderHeader.getOrderStatus(),orderHeader.getYear(),month,orderHeader.getCustomerAddress());
         alert.put("message","Order Updated Successfully");
         return alert.toString() ;
     }

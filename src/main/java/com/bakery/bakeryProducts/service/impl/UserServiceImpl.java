@@ -49,12 +49,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public String saveUser(User user) {
         JSONObject alert = new JSONObject();
         try {
-
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setUserRole(userRoleRepository.getById(user.getUserRole().getRoleId()));
-            userRepository.save(user);
-            alert.put("message", "User Created Successfully");
-
+             int recordCount= userRepository.recordCount(user.getUsername());
+             if(recordCount == 0) {
+                 user.setPassword(passwordEncoder.encode(user.getPassword()));
+                 user.setUserRole(userRoleRepository.getById(user.getUserRole().getRoleId()));
+                 userRepository.save(user);
+                 alert.put("message", "User Created Successfully");
+             }else{
+                 alert.put("message", "Username already exist in the system");
+             }
 
         } catch (Exception e) {
             e.printStackTrace();

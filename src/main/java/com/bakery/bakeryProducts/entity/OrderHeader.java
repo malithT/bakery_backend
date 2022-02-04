@@ -18,6 +18,7 @@ public class OrderHeader {
     int orderHeaderId;
     String customerName;
     String customerMobile;
+    String customerAddress;
     @Temporal(TemporalType.DATE)
     Date deliveryDate;
     String orderStatus;

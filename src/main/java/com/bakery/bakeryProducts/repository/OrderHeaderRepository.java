@@ -21,8 +21,9 @@ public interface OrderHeaderRepository extends JpaRepository<OrderHeader, Intege
             "delivery_date=:deliveryDate," +
             "order_status=:orderStatus," +
             "year=:year," +
-            "month=:month WHERE order_header_id=:orderId")
-    int editHeaderOrder(int orderId , String customerMobile, String customerName, Date deliveryDate, String orderStatus,String year,String month);
+            "month=:month," +
+            "customer_address =:customerAddress WHERE order_header_id=:orderId")
+    int editHeaderOrder(int orderId , String customerMobile, String customerName, Date deliveryDate, String orderStatus,String year,String month,String customerAddress);
 
     @Modifying
     @Transactional

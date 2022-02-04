@@ -14,5 +14,6 @@ public class CustomerDetails {
     int customerId;
     String customerName;
     String customerMobile;
+    String customerAddress;
 
 }
