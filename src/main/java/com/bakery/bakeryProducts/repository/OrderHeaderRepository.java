@@ -38,5 +38,7 @@ public interface OrderHeaderRepository extends JpaRepository<OrderHeader, Intege
             "AND order_status !='CANCELLED'")
     List<OrderHeader> getUpcomingOrders(Date deliveryDate);
 
+    List<OrderHeader> findAllByOrderByAddedDateDescOrderHeaderIdDesc();
+
 
 }

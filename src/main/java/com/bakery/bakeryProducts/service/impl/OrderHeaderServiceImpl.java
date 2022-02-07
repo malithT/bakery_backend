@@ -18,12 +18,7 @@ public class OrderHeaderServiceImpl implements OrderHeaderService {
 
     @Override
     public List<OrderHeader> getAllHeaderOrders() {
-        try{
-            orderHeaderRepository.findAll();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return orderHeaderRepository.findAll();
+        return orderHeaderRepository.findAllByOrderByAddedDateDescOrderHeaderIdDesc();
     }
 
     @Override
